@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olabamiji Olayemi | Portfolio</title>
+<meta name="description" content="Luxury Portfolio Website of Olabamiji Olayemi - Full Stack Web Developer and UI/UX Designer">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  :root {
+    --primary: #00E676;
+    --primary-glow: rgba(0, 230, 118, 0.2);
+    --secondary: #1DE9B6;
+    --dark-bg: #0A0F14;
+    --panel-bg: rgba(16, 24, 32, 0.82);
+    --text-main: #F3F4F6;
+    --text-muted: #9CA3AF;
+    --glass-border: rgba(255, 255, 255, 0.07);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --transition: cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+  }
+
+  body.light {
+    --dark-bg: #FAFAFA;
+    --panel-bg: rgba(240, 242, 245, 0.88);
+    --text-main: #111827;
+    --text-muted: #4B5563;
+    --glass-border: rgba(0, 0, 0, 0.08);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(rgba(10, 15, 20, 0.92), rgba(10, 15, 20, 0.92)), url('http://googleusercontent.com/image_collection/image_retrieval/4876836723332553706_0') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body.light {
+    background: linear-gradient(rgba(250, 250, 250, 0.95), rgba(250, 250, 250, 0.95)), url('http://googleusercontent.com/image_collection/image_retrieval/4876836723332553706_0') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* Preloader */
+  #preloader {
+    position: fixed;
+    inset: 0;
+    background: #0A0F14;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+  }
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 230, 118, 0.1);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s infinite linear;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Main Layout Grid */
+  .app-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar Design */
+  .sidebar {
+    background: var(--panel-bg);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 280px;
+    height: 100vh;
+    z-index: 100;
+    transition: var(--transition);
+  }
+
+  .sidebar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--primary);
+    margin-bottom: 40px;
+    padding-left: 12px;
+  }
+
+  .sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+
+  .sidebar nav a {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    transition: var(--transition);
+  }
+
+  .sidebar nav a:hover, .sidebar nav a.active {
+    background: rgba(0, 230, 118, 0.1);
+    color: var(--primary);
+  }
+
+  /* Main Area Content */
+  main {
+    grid-column: 2;
+    padding: 0 40px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .section {
+    padding: 120px 0 60px;
+    min-height: 80vh;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+
+  /* Controls (Theme & Mobile Menu) */
+  .controls {
+    position: fixed;
+    top: 30px;
+    right: 40px;
+    display: flex;
+    gap: 12px;
+    z-index: 200;
+  }
+
+  .circle-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: var(--transition);
+  }
+  .circle-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .menu-toggle { display: none; }
+
+  /* Hero Section Component */
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    min-height: 100vh;
+  }
+
+  .hero-text { flex: 1; }
+  .hero-text h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+  }
+  .hero-text h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    font-weight: 500;
+    margin-bottom: 24px;
+    height: 40px;
+  }
+  .hero-text p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 540px;
+    margin-bottom: 40px;
+  }
+
+  .hero-image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero-image img {
+    width: 380px;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: morph 8s ease-in-out infinite alternate;
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 20px 40px rgba(0, 230, 118, 0.15);
+  }
+  @keyframes morph {
+    0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    100% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+  }
+
+  /* Universal Buttons */
+  .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+  }
+  .btn.primary {
+    background: var(--primary);
+    color: #0A0F14;
+    box-shadow: 0 8px 24px var(--primary-glow);
+  }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px var(--primary-glow); }
+  .btn.secondary {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+  }
+  .btn.secondary:hover { background: rgba(255,255,255,0.05); border-color: var(--text-muted); }
+
+  /* Glass Cards */
+  .glass-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    backdrop-filter: blur(20px);
+  }
+
+  /* Grid Responsive System */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--panel-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 0;
+    overflow: hidden;
+    transition: var(--transition);
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+  }
+  .card-content {
+    padding: 32px;
+  }
+  .card i {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 24px;
+    display: inline-block;
+  }
+  .card h3 { margin-bottom: 12px; font-weight: 600; }
+  .card p { color: var(--text-muted); font-size: 0.95rem; }
+
+  /* Project Image Formatting */
+  .project-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  /* Modern Skills Bars */
+  .skills-container { display: flex; flex-direction: column; gap: 24px; }
+  .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500; }
+  .bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  body.light .bar { background: rgba(0,0,0,0.05); }
+  .bar div {
+    width: 0;
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Minimal Clean Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    border-left: 2px solid var(--glass-border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -41px;
+    top: 8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--dark-bg);
+    border: 3px solid var(--primary);
+  }
+
+  /* Interactive Form Inputs */
+  form { display: flex; flex-direction: column; gap: 20px; }
+  .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  input, textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.02);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition);
+  }
+  body.light input, body.light textarea { background: rgba(0,0,0,0.02); }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Float Social Elements */
+  .floating-social {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  /* Footer Section */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--glass-border);
+    margin-top: 100px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Particles and Smooth Fade Elements */
+  #particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+  .particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: floatUp 10s linear infinite;
+  }
+  @keyframes floatUp { from { transform: translateY(100vh); } to { transform: translateY(-20px); } }
+
+  /* ================= RESPONSIVE MEDIA BREAKPOINTS ================= */
+  @media (max-width: 1200px) {
+    .app-container { grid-template-columns: 1fr; }
+    .sidebar { left: -300px; width: 280px; }
+    .sidebar.open { left: 0; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+    main { grid-column: 1; padding: 0 24px; }
+    .menu-toggle { display: flex; }
+    .controls { right: 24px; top: 24px; }
+    .hero { flex-direction: column-reverse; justify-content: center; text-align: center; gap: 40px; padding-top: 140px; }
+    .hero-text p { margin-left: auto; margin-right: auto; }
+    .btn-group { justify-content: center; }
+    .hero-image img { width: 280px; height: 280px; }
+  }
+
+  @media (max-width: 768px) {
+    .input-group { grid-template-columns: 1fr; }
+    .section-title { font-size: 2rem; }
+    .hero-text h1 { font-size: 2.8rem; }
+    .floating-social { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="preloader"><div class="loader"></div></div>
+<div id="particles"></div>
+
+<div class="controls">
+  <button id="themeToggle" class="circle-btn" aria-label="Toggle Theme"><i class="fas fa-moon"></i></button>
+  <button class="circle-btn menu-toggle" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+</div>
+
+<div class="app-container">
+  <aside class="sidebar">
+    <div class="logo">OO.</div>
+    <nav>
+      <a href="#hero" class="nav-link active"><i class="fas fa-home" style="margin-right:12px;"></i>Home</a>
+      <a href="#about" class="nav-link"><i class="fas fa-user" style="margin-right:12px;"></i>About</a>
+      <a href="#skills" class="nav-link"><i class="fas fa-code" style="margin-right:12px;"></i>Skills</a>
+      <a href="#services" class="nav-link"><i class="fas fa-cubes" style="margin-right:12px;"></i>Services</a>
+      <a href="#portfolio" class="nav-link"><i class="fas fa-folder-open" style="margin-right:12px;"></i>Projects</a>
+      <a href="#timeline" class="nav-link"><i class="fas fa-history" style="margin-right:12px;"></i>Experience</a>
+      <a href="#contact" class="nav-link"><i class="fas fa-envelope" style="margin-right:12px;"></i>Contact</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="hero" class="section hero">
+      <div class="hero-text">
+        <h1>Olabamiji Olayemi</h1>
+        <h2 id="typing"></h2>
+        <p>I build engineering-focused, high-converting digital products for global brands, startups, and modern businesses.</p>
+        <div class="btn-group">
+          <a href="#contact" class="btn primary">Get In Touch</a>
+          <a href="#portfolio" class="btn secondary">View Workspace</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images.jpeg" alt="Full Stack Developer Neon Workspace">
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2 class="section-title">About Me</h2>
+      <div class="glass-card">
+        <p style="margin-bottom: 20px;">I am <strong>Olabamiji Olayemi</strong>, a premium Full Stack Web Developer and UI/UX Designer dedicated to sculpting smooth web infrastructure.</p>
+        <p style="margin-bottom: 30px; color: var(--text-muted);">I handle complex system architectures, dynamic user flows, robust structural backends, and optimization frameworks.</p>
+        <a href="cv.pdf" download class="btn primary"><i class="fas fa-download"></i> Download CV</a>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <h2 class="section-title">Core Engine</h2>
+      <div class="skills-container glass-card">
+        <div class="skill"><div class="skill-info"><span>Frontend Stack</span><span>95%</span></div><div class="bar"><div data-width="95%"></div></div></div>
+        <div class="skill"><div class="skill-info"><span>Node.js / Systems Architecture</span><span>88%</span></div><div class="bar"><div data-width="88%"></div></div></div>
+        <div class="skill"><div class="skill-info"><span>UI/UX Optimization</span><span>90%</span></div><div class="bar"><div data-width="90%"></div></div></div>
+        <div class="skill"><div class="skill-info"><span>Database Logic Structures</span><span>82%</span></div><div class="bar"><div data-width="82%"></div></div></div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <h2 class="section-title">Capabilities</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-content">
+            <i class="fas fa-layer-group"></i>
+            <h3>Full Stack Scale</h3>
+            <p>End-to-end infrastructure planning and structural software delivery.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <i class="fas fa-pencil-ruler"></i>
+            <h3>UI/UX Architecture</h3>
+            <p>User research and high fidelity functional mapping application layouts.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <i class="fas fa-gauge-high"></i>
+            <h3>System Optimization</h3>
+            <p>Fine-tuning production configurations for extreme speed loads.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section">
+      <h2 class="section-title">Selected Projects</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img src="images.jpeg" class="project-img" alt="Enterprise Application Grid Interface">
+          <div class="card-content">
+            <h3>Enterprise App Grid</h3>
+            <p>High-capacity operational monitoring dashboards.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="http://googleusercontent.com/image_collection/image_retrieval/12877198664693491600_1" class="project-img" alt="E-Commerce Interface Layer Design">
+          <div class="card-content">
+            <h3>E-Commerce Layer</h3>
+            <p>Asynchronous checkouts built for high user concurrency.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="http://googleusercontent.com/image_collection/image_retrieval/12877198664693491600_2" class="project-img" alt="Brand Platform Interface Modern Showcase">
+          <div class="card-content">
+            <h3>Brand Identity Node</h3>
+            <p>Premium web layers configured with beautiful modern animations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="timeline" class="section">
+      <h2 class="section-title">Journey Log</h2>
+      <div class="timeline">
+        <div class="timeline-item"><h4>System Engineering Initialization</h4><p style="color:var(--text-muted)">Learned production architecture patterns.</p></div>
+        <div class="timeline-item"><h4>Freelance Launch Deployment</h4><p style="color:var(--text-muted)">Delivered digital applications globally.</p></div>
+        <div class="timeline-item"><h4>Full Stack Transition Node</h4><p style="color:var(--text-muted)">Configuring clean, robust asynchronous architectures.</p></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2 class="section-title">Initiate Thread</h2>
+      <form id="contactForm" class="glass-card">
+        <div class="input-group">
+          <input type="text" id="name" placeholder="Name" required>
+          <input type="email" id="email" placeholder="Email" required>
+        </div>
+        <input type="text" id="subject" placeholder="Project Nature" required>
+        <textarea id="message" placeholder="Project Parameters & Scope Details" required></textarea>
+        <button type="submit" class="btn primary">Transmit Message</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>© 2026 Olabamiji Olayemi. Engineered with precision.</p>
+    </footer>
+  </main>
+</div>
+
+<div class="floating-social">
+  <a href="https://wa.me/2349129497918" class="circle-btn"><i class="fab fa-whatsapp"></i></a>
+  <a href="#" class="circle-btn"><i class="fab fa-github"></i></a>
+  <a href="#" class="circle-btn"><i class="fab fa-linkedin"></i></a>
+</div>
+
+<script>
+  window.addEventListener("load", () => {
+    const preloader = document.getElementById("preloader");
+    preloader.style.opacity = "0";
+    setTimeout(() => preloader.style.display = "none", 500);
+    animateSkills();
+  });
+
+  /* Theme Toggle Logic */
+  const themeToggle = document.getElementById("themeToggle");
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+    const icon = themeToggle.querySelector("i");
+    icon.classList.toggle("fa-moon");
+    icon.classList.toggle("fa-sun");
+  });
+
+  /* Responsive Layout Switcher Drawer */
+  const menuToggle = document.querySelector(".menu-toggle");
+  const sidebar = document.querySelector(".sidebar");
+  menuToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    sidebar.classList.toggle("open");
+  });
+
+  document.addEventListener("click", (e) => {
+    if(!sidebar.contains(e.target) && sidebar.classList.contains("open")) {
+      sidebar.classList.remove("open");
+    }
+  });
+
+  /* Modern Linear Typing Engine */
+  const typing = document.getElementById("typing");
+  const texts = ["Full Stack Engineer", "UI/UX System Designer", "Solutions Architect"];
+  let textIndex = 0, charIndex = 0, deleting = false;
+
+  function typeEffect() {
+    let current = texts[textIndex];
+    typing.textContent = deleting ? current.substring(0, charIndex--) : current.substring(0, charIndex++);
+    let speed = deleting ? 40 : 80;
+
+    if (!deleting && charIndex === current.length + 1) { speed = 2000; deleting = true; }
+    if (deleting && charIndex === 0) { deleting = false; textIndex = (textIndex + 1) % texts.length; }
+    setTimeout(typeEffect, speed);
+  }
+  typeEffect();
+
+  /* Micro Skills Animation Engine Trigger */
+  function animateSkills() {
+    document.querySelectorAll(".bar div").forEach(bar => {
+      bar.style.width = bar.parentElement.previousElementSibling.lastElementChild.textContent;
+    });
+  }
+
+  /* Structural Dynamic Header Track Highlights */
+  const sections = document.querySelectorAll("section");
+  const navLinks = document.querySelectorAll(".nav-link");
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(section => {
+      if (pageYOffset >= (section.offsetTop - 280)) { current = section.getAttribute("id"); }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === "#" + current) link.classList.add("active");
+    });
+  });
+
+  /* Minimal Clean Particle System */
+  const particlesContainer = document.getElementById("particles");
+  for (let i = 0; i < 25; i++) {
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+    particle.style.left = Math.random() * 100 + "vw";
+    particle.style.animationDuration = (6 + Math.random() * 6) + "s";
+    particle.style.animationDelay = Math.random() * 5 + "s";
+    particlesContainer.appendChild(particle);
+  }
+
+  /* Unified Mail and Instant WhatsApp router */
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const subject = document.getElementById("subject").value.trim();
+    const message = document.getElementById("message").value.trim();
+    
+    const text = `Name: ${name}%0AEmail: ${email}%0ASubject: ${subject}%0AMessage: ${message}`;
+    window.open(`https://wa.me/2349129497918?text=${text}`, "_blank");
+    this.reset();
+  });
+</script>
+</body>
+</html>
